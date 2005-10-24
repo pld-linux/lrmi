@@ -1,12 +1,12 @@
 Summary:	Library for calling real mode BIOS routines under Linux
 Summary(pl):	Biblioteka do wywo³ywania funkcji BIOS w trybie rzeczywistym pod Linuksem
 Name:		lrmi
-Version:	0.8
-Release:	0.99
-License:	BSD-like ?
+Version:	0.9
+Release:	1
+License:	BSD-like/Public Domain (see source)
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/lrmi/%{name}-%{version}.tar.gz
-# Source0-md5:	424a451b9a499061c961d2f4ed482a4d
+# Source0-md5:	00c2d0e4f4848100c04d8f88591cb943
 URL:		http://sourceforge.net/projects/lrmi/
 ExclusiveArch:	%{ix86}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
