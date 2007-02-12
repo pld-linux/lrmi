@@ -1,5 +1,5 @@
 Summary:	Library for calling real mode BIOS routines under Linux
-Summary(pl):	Biblioteka do wywo≥ywania funkcji BIOS w trybie rzeczywistym pod Linuksem
+Summary(pl.UTF-8):   Biblioteka do wywo≈Çywania funkcji BIOS w trybie rzeczywistym pod Linuksem
 Name:		lrmi
 Version:	0.10
 Release:	1
@@ -14,32 +14,32 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 LRMI is a library for calling real mode BIOS routines under Linux.
 
-%description -l pl
-LRMI to biblioteka do wywo≥ywania funkcji BIOS w trybie rzeczywistym
+%description -l pl.UTF-8
+LRMI to biblioteka do wywo≈Çywania funkcji BIOS w trybie rzeczywistym
 pod Linuksem.
 
 %package devel
 Summary:	Header files for lrmi library
-Summary(pl):	Pliki nag≥Ûwkowe biblioteki lrmi
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe biblioteki lrmi
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Header files for lrmi library.
 
-%description devel -l pl
-Pliki nag≥Ûwkowe biblioteki lrmi.
+%description devel -l pl.UTF-8
+Pliki nag≈Ç√≥wkowe biblioteki lrmi.
 
 %package static
 Summary:	Static lrmi library
-Summary(pl):	Statyczna biblioteka lrmi
+Summary(pl.UTF-8):   Statyczna biblioteka lrmi
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static lrmi library.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna biblioteka lrmi.
 
 %prep
