@@ -1,5 +1,5 @@
 --- lrmi-0.10/lrmi.c.orig	2005-12-05 00:44:44.000000000 +0100
-+++ lrmi-0.10/lrmi.c	2008-09-18 19:31:56.027620364 +0200
++++ lrmi-0.10/lrmi.c	2008-11-01 10:55:41.460727425 +0100
 @@ -61,6 +61,14 @@
  
  #include "lrmi.h"
@@ -15,6 +15,15 @@
  #define REAL_MEM_BASE 	((void *)0x10000)
  #define REAL_MEM_SIZE 	0x40000
  #define REAL_MEM_BLOCKS 	0x100
+@@ -328,7 +336,7 @@
+ 	 and the ROM (0xa0000 - 0x100000)
+ 	*/
+ 	if (!map_file((void *)0, 0x502,
+-	 PROT_READ | PROT_WRITE | PROT_EXEC,
++	 PROT_READ | PROT_WRITE,
+ 	 MAP_FIXED | MAP_PRIVATE, "/dev/zero", 0)) {
+ 		real_mem_deinit();
+ 		return 0;
 @@ -340,7 +348,7 @@
  		return 0;
  	}
@@ -29,8 +38,8 @@
  	}
  
 +	if (!map_file((void *)0xc0000, 0x40000,
-+	 PROT_READ | PROT_WRITE | PROT_EXEC,
-+	 MAP_FIXED | MAP_SHARED, "/dev/mem", 0xc0000)) {
++		PROT_READ | PROT_EXEC,
++		MAP_FIXED | MAP_SHARED, "/dev/mem", 0xc0000)) {
 +		munmap((void *)0, 0x502);
 +		munmap((void *)0xa0000, 0x20000);
 +		real_mem_deinit();
