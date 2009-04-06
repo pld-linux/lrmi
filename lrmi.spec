@@ -6,7 +6,7 @@ Summary:	Library for calling real mode BIOS routines under Linux
 Summary(pl.UTF-8):	Biblioteka do wywoływania funkcji BIOS w trybie rzeczywistym pod Linuksem
 Name:		lrmi
 Version:	0.10
-Release:	5
+Release:	6
 License:	BSD-like/Public Domain (see source)
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/lrmi/%{name}-%{version}.tar.gz
@@ -98,7 +98,7 @@ install vbe.h lrmi.h $RPM_BUILD_ROOT%{_includedir}/%{name}
 
 %if %{with klibc}
 install -d $RPM_BUILD_ROOT{%{_klibdir},%{_kincludedir}/%{name}}
-install *.a $RPM_BUILD_ROOT%{_klibdir}
+install klibc/*.a $RPM_BUILD_ROOT%{_klibdir}
 install vbe.h lrmi.h $RPM_BUILD_ROOT%{_kincludedir}/%{name}
 %endif
 
