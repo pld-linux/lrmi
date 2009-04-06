@@ -1,16 +1,26 @@
+#
+# Conditional build:
+%bcond_without	klibc	# use klibc for initrd/initramfs purposes
+#
 Summary:	Library for calling real mode BIOS routines under Linux
 Summary(pl.UTF-8):	Biblioteka do wywoływania funkcji BIOS w trybie rzeczywistym pod Linuksem
 Name:		lrmi
 Version:	0.10
-Release:	4
+Release:	5
 License:	BSD-like/Public Domain (see source)
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/lrmi/%{name}-%{version}.tar.gz
 # Source0-md5:	fc1d9495e8f4563fca471bb65f34a5da
 Patch0:		%{name}-update-v86d.patch
 URL:		http://sourceforge.net/projects/lrmi/
+%{?with_klibc:BuildRequires:	klibc-devel}
 ExclusiveArch:	%{ix86}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%if %{with klibc}
+%define		_klibdir	%{_prefix}/%{_lib}/klibc
+%define		_kincludedir	%{_prefix}/include/klibc
+%endif
 
 %description
 LRMI is a library for calling real mode BIOS routines under Linux.
@@ -43,11 +53,33 @@ Static lrmi library.
 %description static -l pl.UTF-8
 Statyczna biblioteka lrmi.
 
+%package klibc-devel
+Summary:	Header files and static lrmi library for klibc
+Summary(pl.UTF-8):	Pliki nagłówkowe i statyczna biblioteka lrmi dla klibc
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description klibc-devel
+Header files and static lrmi library for klibc.
+
+%description klibc-devel -l pl.UTF-8
+Pliki nagłówkowe i statyczna biblioteka lrmi dla klibc.
+
 %prep
 %setup -q
 %patch0 -p1
 
 %build
+%if %{with klibc}
+%{__make} liblrmi.a \
+	CC="klcc" \
+	CFLAGS="%{rpmcflags} -Os -static -Wall"
+
+mkdir -p klibc
+cp liblrmi.a klibc/
+%{__make} clean
+%endif
+
 %{__make} \
 	CC="%{__cc}" \
 	CFLAGS="%{rpmcflags} -Wall"
@@ -63,6 +95,12 @@ install -d $RPM_BUILD_ROOT{%{_libdir},%{_bindir},%{_includedir}/%{name}}
 install vbetest $RPM_BUILD_ROOT%{_bindir}
 install *.so *.a $RPM_BUILD_ROOT%{_libdir}
 install vbe.h lrmi.h $RPM_BUILD_ROOT%{_includedir}/%{name}
+
+%if %{with klibc}
+install -d $RPM_BUILD_ROOT{%{_klibdir},%{_kincludedir}/%{name}}
+install *.a $RPM_BUILD_ROOT%{_klibdir}
+install vbe.h lrmi.h $RPM_BUILD_ROOT%{_kincludedir}/%{name}
+%endif
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -82,3 +120,10 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/liblrmi.a
+
+%if %{with klibc}
+%files klibc-devel
+%defattr(644,root,root,755)
+%{_kincludedir}/%{name}
+%{_klibdir}/liblrmi.a
+%endif
