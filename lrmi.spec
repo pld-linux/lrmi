@@ -67,7 +67,7 @@ Pliki nagłówkowe i statyczna biblioteka lrmi dla klibc.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
 %build
 %if %{with klibc}
